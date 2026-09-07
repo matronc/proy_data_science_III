@@ -1,0 +1,51 @@
+{
+  "model_name": "distilbert-base-uncased",
+  "lora": {
+    "r": 8,
+    "alpha": 16,
+    "dropout": 0.1,
+    "target_modules": [
+      "q_lin",
+      "v_lin"
+    ]
+  },
+  "total_parameters": 67697672,
+  "trainable_parameters": 741124,
+  "trainable_percentage": 1.0947555183286066,
+  "training_seconds": 265.9998848,
+  "final_train_loss": 0.5183497238159179,
+  "validation_metrics": {
+    "eval_loss": 0.3577481806278229,
+    "eval_accuracy": 0.878125,
+    "eval_precision_macro": 0.8780731235462788,
+    "eval_recall_macro": 0.8781249999999999,
+    "eval_f1_macro": 0.8776266120296758
+  },
+  "test_metrics": {
+    "accuracy": 0.8875,
+    "precision_macro": 0.8874979853537359,
+    "recall_macro": 0.8875,
+    "f1_macro": 0.8873646700852735
+  },
+  "lora_classification_report": "              precision    recall  f1-score   support\n\n    Business       0.83      0.82      0.83       500\n    Sci_Tech       0.85      0.88      0.86       500\n      Sports       0.96      0.98      0.97       500\n       World       0.90      0.88      0.89       500\n\n    accuracy                           0.89      2000\n   macro avg       0.89      0.89      0.89      2000\nweighted avg       0.89      0.89      0.89      2000\n",
+  "baseline_classification_report": "              precision    recall  f1-score   support\n\n    Business       0.85      0.86      0.85       500\n    Sci_Tech       0.87      0.87      0.87       500\n      Sports       0.95      0.96      0.96       500\n       World       0.91      0.89      0.90       500\n\n    accuracy                           0.90      2000\n   macro avg       0.90      0.90      0.90      2000\nweighted avg       0.90      0.90      0.90      2000\n",
+  "baseline_test_metrics": {
+    "precision_macro": 0.8961507661944714,
+    "recall_macro": 0.896,
+    "f1_macro": 0.8960028447348107
+  },
+  "comparison": [
+    {
+      "modelo": "TF-IDF + LogisticRegression",
+      "precision_macro": 0.8961507661944714,
+      "recall_macro": 0.896,
+      "f1_macro": 0.8960028447348107
+    },
+    {
+      "modelo": "DistilBERT + LoRA",
+      "precision_macro": 0.8874979853537359,
+      "recall_macro": 0.8875,
+      "f1_macro": 0.8873646700852735
+    }
+  ]
+}

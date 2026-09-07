@@ -10,7 +10,9 @@ Pipeline de clasificación de noticias de AG News mediante preprocesamiento NLP,
 │   ├── ag_news_train.csv
 │   └── ag_news_test.csv
 ├── notebooks/
-│   └── pipeline_clasificador_tfidf.ipynb
+│   ├── pipeline_EDA_NLP.ipynb
+│   ├── pipeline_clasificador_tfidf.ipynb
+│   └── pre_entrega_4_lora.ipynb
 ├── modelo_tfidf_ag_news.joblib
 ├── requirements.txt
 └── README.md
@@ -67,7 +69,7 @@ Según la matriz de confusión y el `classification_report`, `Business` es la ca
 
 ### Archivo de requerimientos
 
-Las dependencias y versiones mínimas se encuentran en [`requirements.txt`](requirements.txt). Para este módulo se utilizan principalmente `pandas`, `numpy`, `scikit-learn`, `matplotlib`, `seaborn`, `spacy` y `joblib`. `transformers` y `nltk` corresponden a los módulos de tokenización anteriores.
+Las dependencias y versiones mínimas se encuentran en [`requirements.txt`](requirements.txt). Incluyen las herramientas del baseline (`pandas`, `numpy`, `scikit-learn`, `matplotlib`, `seaborn`, `spacy` y `joblib`) y las necesarias para LoRA (`transformers`, `datasets`, `peft`, `accelerate` y `evaluate`).
 
 ### Carga del pipeline guardado
 
@@ -77,3 +79,23 @@ import joblib
 pipeline = joblib.load("modelo_tfidf_ag_news.joblib")
 prediccion = pipeline.predict(["A new article about science and technology"])
 ```
+
+## Pre-entrega 4: Transformer + LoRA
+
+El notebook [`notebooks/pre_entrega_4_lora.ipynb`](notebooks/pre_entrega_4_lora.ipynb) prepara el fine-tuning eficiente sobre el mismo corpus AG News. Utiliza `distilbert-base-uncased`, convierte las etiquetas a enteros y crea los splits de train, validacion y test sin reutilizar test durante el entrenamiento.
+
+La configuracion LoRA definida es `r=8`, `lora_alpha=16`, `lora_dropout=0.1`, con los modulos objetivo `q_lin` y `v_lin`.
+
+El notebook registra el tiempo de entrenamiento, los parametros totales y entrenables, las metricas macro, la matriz de confusion y la comparacion contra el baseline TF-IDF. Su ejecucion requiere GPU CUDA en Colab o Kaggle.
+
+Con solo un `1.09%` de parametros entrenables (`741.124` de `67.697.672`), DistilBERT + LoRA alcanza un F1 macro de `0.8874` en test, levemente por debajo del baseline TF-IDF (`0.8960`). La evidencia completa (configuracion, tiempos, metricas y reportes de clasificacion) se guarda en [`resultados_lora.json`](resultados_lora.json).
+
+### Reporte tecnico (entregable en PDF)
+
+El script [`generar_reporte_lora.py`](generar_reporte_lora.py) lee `resultados_lora.json` y genera el reporte tecnico requerido como entregable de la Pre-entrega 4:
+
+```bash
+python generar_reporte_lora.py
+```
+
+Esto produce `Troncoso_Marcelo_Checkpoint_NLP3.pdf` con la estructura solicitada: 1. Resumen de arquitectura, 2. Configuracion PEFT, 3. Resultados y comparativa, 4. Conclusiones.
