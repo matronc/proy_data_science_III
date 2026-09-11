@@ -12,7 +12,7 @@
   "total_parameters": 67697672,
   "trainable_parameters": 741124,
   "trainable_percentage": 1.0947555183286066,
-  "training_seconds": 265.9998848,
+  "training_seconds": 270.2803203000003,
   "final_train_loss": 0.5183497238159179,
   "validation_metrics": {
     "eval_loss": 0.3577481806278229,
